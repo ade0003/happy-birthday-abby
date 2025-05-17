@@ -1,0 +1,226 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(
+    270deg,
+    #ff0000,
+    #ff9900,
+    #ffee00,
+    #33ff00,
+    #00ffee,
+    #0066ff,
+    #cc00ff,
+    #ff0000
+  );
+  background-size: 200% 200%;
+  animation: rainbow-bg 5s linear infinite;
+  overflow: hidden;
+  cursor: url("1.png"), auto; /* Custom cursor using an image */
+}
+
+@keyframes rainbow-bg {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+#collage-container {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.rainbow-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4vw;
+  font-weight: bold;
+  text-align: center;
+  background: linear-gradient(
+    270deg,
+    #ff0000,
+    #ff9900,
+    #ffee00,
+    #33ff00,
+    #00ffee,
+    #0066ff,
+    #cc00ff,
+    #ff0000
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 2s linear infinite, text-chaos 0.5s infinite alternate;
+  z-index: 10;
+  filter: drop-shadow(0 0 10px #fff) drop-shadow(0 0 20px #ff00cc);
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes text-chaos {
+  0% {
+    letter-spacing: 0.1em;
+    transform: translate(-50%, -50%) scale(1) rotate(-2deg);
+  }
+  100% {
+    letter-spacing: 0.3em;
+    transform: translate(-50%, -50%) scale(1.1) rotate(2deg);
+  }
+}
+
+.collage-image {
+  position: absolute;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.1s;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.collage-image:hover {
+  transform: scale(1.2) !important;
+  z-index: 1000;
+}
+
+.video-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  display: flex;
+  gap: 20px;
+}
+
+.video-container audio {
+  width: 200px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Chaotic Animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-40px) rotate(10deg) scale(1.1);
+  }
+  50% {
+    transform: translateY(20px) rotate(-10deg) scale(0.9);
+  }
+  75% {
+    transform: translateY(-30px) rotate(5deg) scale(1.2);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+  to {
+    transform: rotate(720deg) scale(1.2);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  20% {
+    transform: translateY(-60px) scale(1.2);
+  }
+  50% {
+    transform: translateY(30px) scale(0.8);
+  }
+  80% {
+    transform: translateY(-40px) scale(1.1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(-10deg) scale(1);
+  }
+  50% {
+    transform: rotate(10deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(-10deg) scale(1);
+  }
+}
+
+@keyframes wander {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(100px, 50px) rotate(90deg);
+  }
+  50% {
+    transform: translate(50px, 100px) rotate(180deg);
+  }
+  75% {
+    transform: translate(-50px, 50px) rotate(270deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(360deg);
+  }
+}
+
+.animate-float {
+  animation: float 1.2s ease-in-out infinite alternate;
+}
+.animate-spin {
+  animation: spin 2s linear infinite;
+}
+.animate-bounce {
+  animation: bounce 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+}
+.animate-pulse {
+  animation: pulse 0.7s ease-in-out infinite;
+}
+.animate-wiggle {
+  animation: wiggle 0.5s ease-in-out infinite;
+}
+.animate-wander {
+  animation: wander 4s ease-in-out infinite;
+}
