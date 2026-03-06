@@ -6,16 +6,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Array of image filenames (renamed)
   const baseImages = [
-    "1.png",
-    "2.png",
-    "3.png",
-    "4.png",
-    "5.png",
-    "6.png",
-    "7.png",
-    "8.png",
-    "9.png",
-    "10.png",
+    "1.jpg",
+    "4.jpg",
+    "Screenshot 2026-03-05 at 6.55.27 PM.png",
+    "Screenshot 2026-03-05 at 6.56.19 PM.png",
+    "Screenshot 2026-03-05 at 6.58.41 PM.png",
+    "Screenshot 2026-03-05 at 6.58.49 PM.png",
   ];
 
   // Fill the screen with more images (duplicates for chaos)
@@ -38,59 +34,55 @@ document.addEventListener("DOMContentLoaded", () => {
   // Staggered image appearance
   function showImagesStaggered() {
     images.forEach((imageSrc, index) => {
-      setTimeout(() => {
-        const img = document.createElement("img");
-        img.src = imageSrc;
-        img.className = "collage-image";
-        img.style.opacity = 0;
-        img.style.transition = "opacity 0.5s, transform 0.1s";
+      setTimeout(
+        () => {
+          const img = document.createElement("img");
+          img.src = imageSrc;
+          img.className = "collage-image";
+          img.style.opacity = 0;
+          img.style.transition = "opacity 0.5s, transform 0.1s";
 
-        // Random size
-        const minSize = 120;
-        const maxSize = 340;
-        const size = Math.random() * (maxSize - minSize) + minSize;
-        img.style.width = `${size}px`;
-        img.style.height = "auto";
+          // Random size
+          const minSize = 120;
+          const maxSize = 340;
+          const size = Math.random() * (maxSize - minSize) + minSize;
+          img.style.width = `${size}px`;
+          img.style.height = "auto";
 
-        // Random position (cover the whole screen)
-        const x = Math.random() * (window.innerWidth - size);
-        const y = Math.random() * (window.innerHeight - size);
+          // Random position (cover the whole screen)
+          const x = Math.random() * (window.innerWidth - size);
+          const y = Math.random() * (window.innerHeight - size);
 
-        // Random animation
-        const randomAnimation =
-          animations[Math.floor(Math.random() * animations.length)];
-        img.classList.add(randomAnimation);
+          // Random animation
+          const randomAnimation =
+            animations[Math.floor(Math.random() * animations.length)];
+          img.classList.add(randomAnimation);
 
-        // Random rotation
-        const rotation = Math.random() * 360;
-        img.style.transform = `rotate(${rotation}deg)`;
+          // Random rotation
+          const rotation = Math.random() * 360;
+          img.style.transform = `rotate(${rotation}deg)`;
 
-        // Random z-index for more chaos
-        img.style.zIndex = Math.floor(Math.random() * 50) + 2;
+          // Random z-index for more chaos
+          img.style.zIndex = Math.floor(Math.random() * 50) + 2;
 
-        img.style.left = `${x}px`;
-        img.style.top = `${y}px`;
+          img.style.left = `${x}px`;
+          img.style.top = `${y}px`;
 
-        collageContainer.appendChild(img);
-        // Fade in
-        setTimeout(() => {
-          img.style.opacity = 1;
-        }, 50);
-      }, Math.random() * 1200 + index * 80); // Staggered, with some randomness
+          collageContainer.appendChild(img);
+          // Fade in
+          setTimeout(() => {
+            img.style.opacity = 1;
+          }, 50);
+        },
+        Math.random() * 1200 + index * 80,
+      ); // Staggered, with some randomness
     });
   }
 
   // --- AUDIO AUTOPLAY CHAOS ---
   function tryAutoplay() {
-    audio1
-      .play()
-      .then(() => {
-        // Wait for audio1 to end, then alternate
-      })
-      .catch(() => {
-        // If autoplay fails, show a big overlay button
-        showPlayOverlay();
-      });
+    // Autoplay is blocked by browsers, so just show overlay
+    showPlayOverlay();
   }
 
   function showPlayOverlay() {
@@ -112,7 +104,9 @@ document.addEventListener("DOMContentLoaded", () => {
       '<button style="padding: 10px 20px; font-size: 1.5vw; background-color: #ff0000; color: white; border: none; border-radius: 5px;">Start Party</button>';
     overlay.onclick = () => {
       overlay.remove();
-      audio1.play();
+      audio1.play().catch(() => {});
+      audio2.play().catch(() => {});
+      audio3.play().catch(() => {});
       // Request full screen
       if (document.documentElement.requestFullscreen) {
         document.documentElement.requestFullscreen();
@@ -132,18 +126,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // Alternate audio playback forever
   function setupAudioAlternation() {
     audio1.onended = () => {
-      audio2.currentTime = 0;
-      audio3.currentTime = 0;
-      audio2.play();
-      audio3.play();
+      audio1.currentTime = 0;
+      audio1.play().catch(() => {});
     };
     audio2.onended = () => {
-      audio1.currentTime = 0;
-      audio1.play();
+      audio2.currentTime = 0;
+      audio2.play().catch(() => {});
     };
     audio3.onended = () => {
-      audio1.currentTime = 0;
-      audio1.play();
+      audio3.currentTime = 0;
+      audio3.play().catch(() => {});
     };
   }
 
@@ -151,18 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupAudioAlternation();
 
   // Make audio start together when one is paused
-  audio1.addEventListener("pause", () => {
-    if (!audio2.paused) audio2.pause();
-    if (!audio3.paused) audio3.pause();
-  });
-  audio2.addEventListener("pause", () => {
-    if (!audio1.paused) audio1.pause();
-    if (!audio3.paused) audio3.pause();
-  });
-  audio3.addEventListener("pause", () => {
-    if (!audio1.paused) audio1.pause();
-    if (!audio2.paused) audio2.pause();
-  });
+  // Removed sync pausing
 
   // Handle window resize (re-randomize positions)
   window.addEventListener("resize", () => {
